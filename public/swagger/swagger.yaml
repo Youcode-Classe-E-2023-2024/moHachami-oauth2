@@ -1,0 +1,330 @@
+swagger: '2.0'
+info:
+  description: LPT APIs
+  version: 1.0.0
+  title: Frontend APIs
+basePath: /api/
+tags:
+  - name: Authentication
+    description: User Authentication
+  - name: Users
+    description: User Management
+  - name: Role Management
+    description: Role and Permissions Management
+
+paths:
+
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register User
+      description: Register a new user.
+      operationId: registerUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: User object
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              password_confirmation:
+                type: string
+      responses:
+        '201':
+          description: User created successfully
+        '403':
+          description: Bad request
+
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User Login
+      description: Log in with user credentials.
+      operationId: loginUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: credentials
+          description: User credentials
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        '200':
+          description: User logged in successfully
+        '403':
+          description: Bad Request
+
+  /auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: Logout User
+      description: Log out the authenticated user and revoke the access token.
+      operationId: logoutUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token for authentication
+          required: true
+          type: string
+      responses:
+        '200':
+          description: User logged out successfully
+        '401':
+          description: Unauthorized - Invalid token
+
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Retrieve all users
+      description: Get a list of all users.
+      operationId: getAllUsers
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: List of users retrieved successfully
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        '403':
+          description: Forbidden - Bad request
+
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: Create a new user with the provided data.
+      operationId: createUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: user
+          description: User object
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              email:
+                type: string
+              password:
+                type: string
+              password_confirmation:
+                type: string
+      responses:
+        '201':
+          description: User created successfully
+        '403':
+          description: Forbidden - Bad request
+  /users/{id}:
+    put:
+      tags:
+        - Users
+      summary: Update user
+      description: Update an existing user's information.
+      operationId: updateUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: ID of the user to update
+          required: true
+          type: integer
+        - in: body
+          name: user
+          description: Updated user object
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              password:
+                type: string
+      responses:
+        '200':
+          description: User updated successfully
+        '403':
+          description: Forbidden - Bad request
+
+    delete:
+      tags:
+        - Users
+      summary: Delete user
+      description: Delete an existing user.
+      operationId: deleteUser
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          description: ID of the user to delete
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: User deleted successfully
+        '403':
+          description: Forbidden - Bad request
+
+  /assignRole:
+    post:
+      tags:
+        - Users
+      summary: Assign role to user
+      description: Assign a role to a user.
+      operationId: assignRoleToUser
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: roleData
+          description: Role data including user ID and role name
+          required: true
+          schema:
+            type: object
+            properties:
+              user_id:
+                type: integer
+              role:
+                type: string
+      responses:
+        '200':
+          description: Role assigned successfully
+        '403':
+          description: Forbidden - Bad request
+  /AddRole:
+    post:
+      tags:
+        - Role Management
+      summary: Add Role
+      description: Add a new role.
+      operationId: addRole
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: roleData
+          description: Role data including role name
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+      responses:
+        '200':
+          description: Role added successfully
+        '422':
+          description: Unprocessable Entity - Validation Error
+
+  /AddPermission:
+    post:
+      tags:
+        - Role Management
+      summary: Add Permission
+      description: Add a new permission.
+      operationId: addPermission
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: permissionData
+          description: Permission data including permission name
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+      responses:
+        '200':
+          description: Permission added successfully
+        '422':
+          description: Unprocessable Entity - Validation Error
+
+  /AssignRoleToPermission:
+    post:
+      tags:
+        - Role Management
+      summary: Assign Role to Permission
+      description: Assign a role to a permission.
+      operationId: assignRoleToPermission
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: rolePermissionData
+          description: Role and permission data
+          required: true
+          schema:
+            type: object
+            properties:
+              roleName:
+                type: string
+              permissions:
+                type: array
+                items:
+                  type: string
+      responses:
+        '200':
+          description: Role assigned to permissions successfully
+        '404':
+          description: Not Found - Role or permission not found
+        '422':
+          description: Unprocessable Entity - Validation Error
+
+definitions:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
