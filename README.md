@@ -40,15 +40,3 @@ This Laravel API project is designed to provide secure authentication and author
 
 ![Swagger-Docs](https://github.com/Youcode-Classe-E-2023-2024/moHachami-oauth2/blob/main/docs/screen.png)
 
-
-## Contributing
-
-Contributions are welcome! If you find any issues or have suggestions for improvements, please submit an issue or create a pull request.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Credits
-
-This project was created and maintained by [Your Name]. Special thanks to the Laravel community for their contributions.
