@@ -1,4 +1,4 @@
-# README - Laravel API with OAuth2, Scopes, PHPUnit, and Swagger Documentation
+# README - Laravel API with OAuth2, Scopes, PHPUnit, and Swagger Documentation.
 
 This README provides an overview of a Laravel API project that utilizes OAuth2 for authentication with scopes to handle roles and permissions. It also includes PHPUnit for testing and Swagger for API documentation.
 
@@ -30,7 +30,7 @@ This Laravel API project is designed to provide secure authentication and author
 2. Login: Send a POST request to `/auth/login` with email and password to obtain an access token.
 3. Access protected routes: Include the access token in the Authorization header for requests to protected routes.
 4. Manage roles and permissions: Use provided endpoints (`/AddRole`, `/AddPermission`, `/AssignRoleToPermission`) to manage roles and permissions.
-5. Access API documentation: Visit `/swagger` to access Swagger documentation for the API endpoints.
+5. Access API documentation: Visit `/api-docs` to access Swagger documentation for the API endpoints.
 
 
 ## Testing
